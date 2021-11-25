@@ -6,12 +6,12 @@ BOOST_AUTO_TEST_SUITE(TEST_RECTANGLE);
 
 BOOST_AUTO_TEST_CASE(Move_Rectangle)
 {
-  almuhidat::PointToPoint(*almuhidat::makeRectangle());
+  almuhidat::PointToPoint(*(almuhidat::makeRectangle()));
 }
 
 BOOST_AUTO_TEST_CASE(Scale_Rectangle)
 {
-  almuhidat::testScale(*almuhidat::makeRectangle());
+  almuhidat::testScale(*(almuhidat::makeRectangle()));
 }
 
 BOOST_AUTO_TEST_SUITE_END();

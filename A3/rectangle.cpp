@@ -1,39 +1,39 @@
 #include "rectangle.hpp"
 
-almuhidat::Rectangle::Rectangle(almuhidat::point_t pos, double height, double width):
-  height(height),
-  width(width),
-  position(pos)
+almuhidat::Rectangle::Rectangle(const almuhidat::point_t &pos, double height, double width):
+  height_(height),
+  width_(width),
+  pos_(pos)
   {}
 
-double almuhidat::Rectangle::calculateArea() const
+double almuhidat::Rectangle::getArea() const
 {
-  return (height * width);
+  return (height_ * width_);
 }
 
-almuhidat::rectangle_t almuhidat::Rectangle::calculateFrameRect() const
+almuhidat::rectangle_t almuhidat::Rectangle::getFrameRect() const
 {
-  return almuhidat::rectangle_t{height, width, position};
+  return {height_, width_, pos_};
 }
 
 void almuhidat::Rectangle::move(const almuhidat::point_t &newPos)
 {
-  position = newPos;
+  pos_ = newPos;
 }
 
 void almuhidat::Rectangle::move(double dx, double dy)
 {
-  position.x += dx;
-  position.y += dy;
+  pos_.x += dx;
+  pos_.y += dy;
 }
 
 almuhidat::Shape::shared almuhidat::Rectangle::clone() const
 {
-  return std::make_shared<Rectangle>(*this);
+  return std::make_shared< Rectangle >(*this);
 }
 
 void almuhidat::Rectangle::scaleShape(double k)
 {
-  height *= k;
-  width *= k;
+  height_ *= k;
+  width_ *= k;
 }

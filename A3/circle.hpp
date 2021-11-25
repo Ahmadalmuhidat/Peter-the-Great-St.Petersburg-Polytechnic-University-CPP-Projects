@@ -8,15 +8,15 @@ namespace almuhidat
   class Circle: public Shape
   {
   public:
-    Circle(point_t position, double radius);
-    double calculateArea() const override;
-    rectangle_t calculateFrameRect() const override;
+    Circle(const point_t &position, double radius);
+    double getArea() const override;
+    rectangle_t getFrameRect() const override;
     void move(const point_t& newPos) override;
     void move(double d_x, double d_y) override;
     shared clone() const override;
 
   private:
-    point_t position_;
+    point_t pos_;
     double radius_;
     void scaleShape(double k) override;
   };

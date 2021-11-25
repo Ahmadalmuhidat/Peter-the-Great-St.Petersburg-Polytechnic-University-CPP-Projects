@@ -5,19 +5,20 @@
 
 namespace almuhidat
 {
-  class Rectangle : public Shape
+  class Rectangle: public Shape
   {
   public:
-    Rectangle(point_t pos, double height, double width);
-    double calculateArea() const override;
-    rectangle_t calculateFrameRect() const override;
+    Rectangle(const point_t &pos, double height, double width);
+    double getArea() const override;
+    rectangle_t getFrameRect() const override;
     void move(const point_t &newPos) override;
     void move(double dx, double dy) override;
     shared clone() const override;
 
   private:
-    double height, width;
-    point_t position;
+    double height_;
+    double width_;
+    point_t pos_;
     void scaleShape(double k) override;
   };
 }

@@ -2,32 +2,45 @@
 #define COMPOSITE_SHAPE_HPP
 
 #include "shape.hpp"
+#include <stdexcept>
 
 namespace almuhidat
 {
-  class CompositeShape : public Shape
+  class CompositeShape: public Shape
   {
   public:
-    using shape_pointer = std::shared_ptr<almuhidat::Shape>;
-    using shape_arr = std::unique_ptr<shape_pointer[]>;
-
-    CompositeShape(shape_pointer source);
+    template < typename... Shapes >
+    CompositeShape(Shapes... sources);
     CompositeShape(const CompositeShape &source);
     CompositeShape(CompositeShape &&source) noexcept = default;
-    double calculateArea() const;
-    rectangle_t calculateFrameRect() const;
+    double getArea() const override;
+    rectangle_t getFrameRect() const override;
     void move(const point_t &point) override;
     void move(double dx, double dy) override;
-    size_t size() const;
-    size_t capacity() const;
-    shape_pointer operator[](const size_t index) const;
+    using shape_pointer = std::shared_ptr< almuhidat::Shape >;
     shape_pointer clone() const override;
 
   private:
     size_t size_;
-    size_t capacity_;
-    std::unique_ptr<shape_pointer[]> members_;
+    using shape_arr = std::unique_ptr< shape_pointer[] >;
+    shape_arr members_;
     void scaleShape(double k) override;
   };
+
+  template < typename... Shapes >
+  CompositeShape::CompositeShape(Shapes... sources):
+    size_(sizeof...(Shapes)),
+    members_(std::make_unique< shape_pointer[] >(size_))
+  {
+    if ( size_ == 0 )
+    {
+      throw std::invalid_argument("[-] the shape size can not be 0");
+    }
+    std::unique_ptr< Shape > tempContainer[] = {std::move(sources)...};
+    for (size_t i = 0; i < size_; i++)
+    {
+      members_[i] = std::move(tempContainer[i]);
+    }
+  }
 }
 #endif

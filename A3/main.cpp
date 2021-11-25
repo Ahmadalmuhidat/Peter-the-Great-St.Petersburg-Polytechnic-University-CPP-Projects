@@ -1,76 +1,59 @@
 #include <iostream>
+#include <memory>
 #include "composite-shape.hpp"
 #include "rectangle.hpp"
 #include "circle.hpp"
 
-
-using shape_pointer = std::unique_ptr<almuhidat::Shape>;
-using namespace almuhidat;
-
 int main()
 {
-  std::cout << "TEST RECTANGLE" << std::endl;
-  double RX, RY;
-  int Width, Height, RDX, RDY;
-  std::cout << "X: ";
-  std::cin >> RX;
-  std::cout << "Y: ";
-  std::cin >> RY;
-  std::cout << "Rectangle Width: ";
-  std::cin >> Width;
-  std::cout << "Rectangle Height: ";
-  std::cin >> Height;
-  almuhidat::point_t rectangle_point{RX, RY};
-  shape_pointer rectangle(std::make_unique<almuhidat::Rectangle>
-               (almuhidat::Rectangle(rectangle_point, Height, Width)));
-  std::cout << "Rectangle Location: (" << almuhidat::getX(*rectangle) <<
-               " " << almuhidat::getY(*rectangle) << ")" << std::endl;
-  rectangle->move(RDX, RDY);
-  std::cout << "Rectangle Location: (" << almuhidat::getX(*rectangle) <<
-               " " << almuhidat::getY(*rectangle) << ")" << std::endl;
-  std::cout << "Area of the Rectangle: " << rectangle->calculateArea() << std::endl;
-  std::cout << "---------------------------------/" << std::endl;
+  std::cout << "TEST RECTANGLE" << "\n";
 
-  std::cout << "TEST CIRCLE" << std::endl;
-  double CX, CY;
-  int Radius, CDX, CDY;
-  std::cout << "X: ";
-  std::cin >> CX;
-  std::cout << "Y: ";
-  std::cin >> CY;
-  std::cout << "Radius: ";
-  std::cin >> Radius;
-  almuhidat::point_t circle_point{CX, CY};
-  shape_pointer circle(std::make_unique<almuhidat::Circle>
-               (almuhidat::Circle(circle_point, Radius)));
-  std::cout << "Circle Location: (" << almuhidat::getX(*circle) <<
-               "," << almuhidat::getY(*circle) << ")" << std::endl;
-  circle->move(CDX, CDY);
-  std::cout << "Circle Location: (" << almuhidat::getX(*circle) <<
-               "," << almuhidat::getY(*circle) << ")" << std::endl;
-  std::cout << "Area of the Circle: " << circle->calculateArea() << std::endl;
-  std::cout << "---------------------------------/" << std::endl;
+  using ShapePtr = std::unique_ptr< almuhidat::Shape >;
+  using Rect = almuhidat::Rectangle;
+  ShapePtr rect(std::make_unique< Rect > (Rect({2, 6}, 5, 3)));
 
-  std::cout << "TEST COMPOSITE SHAPE" << std::endl;
-  double CPX, CPY;
-  int Width2, Height2;
-  std::cout << "Rectangle 2 X & Y: ";
-  std:: cin >> CPX >> CPY;
-  std::cout <<  "Rectangle 2 Width: ";
-  std::cin >> Width2;
-  std::cout << "Rectangle 2 Height: ";
-  std::cin >> Height2;
-  shape_pointer rectangle_2(std::make_unique<almuhidat::Rectangle>
-               (almuhidat::Rectangle({CPX, CPY}, Height2, Width2)));
-  shape_pointer composite(std::unique_ptr<almuhidat::CompositeShape>
-               (almuhidat::CompositeShape(std::move(rectangle), std::move(rectangle_2), std::move(circle))));
-  std::cout << "Composite Shape Location: (" << almuhidat::getX(*composite) <<
-               " " << almuhidat::getY(*composite) << ")" << std::endl;
-  std::cout << "Area of the Composite Shape: " << composite->calculateArea() << std::endl;
-  composite->scale(6);
-  std::cout << "Composite Shape Location: (" << almuhidat::getX(*composite) <<
-               "," << almuhidat::getY(*composite) << ")" << std::endl;
-  std::cout << "New Area of the Composite Shape: " << composite->calculateArea() << std::endl;
+  std::cout << "Rectangle Location: (";
+  std::cout << almuhidat::getX(*rect) << ", " << almuhidat::getY(*rect);
+  std::cout << ")" << "\n";
+
+  rect->move(6, 9);
+  std::cout << "Rectangle Location: (";
+  std::cout << almuhidat::getX(*rect) << ", " << almuhidat::getY(*rect);
+  std::cout  << ")" << "\n";
+  std::cout << "Area of the Rectangle: " << rect->getArea() << "\n\n";
+
+  std::cout << "TEST CIRCLE" << "\n";
+
+  using Circle = almuhidat::Circle;
+  ShapePtr circle(std::make_unique< Circle >(Circle({2.4, 2.8}, 3)));
+
+  std::cout << "Circle Location: (";
+  std::cout << almuhidat::getX(*circle) << ", " << almuhidat::getY(*circle);
+  std::cout << ")" << "\n";
+
+  circle->move(14.3, 15.7);
+
+  std::cout << "Circle Location: (";
+  std::cout << almuhidat::getX(*circle) << ", " << almuhidat::getY(*circle);
+  std::cout << ")" << "\n";
+  std::cout << "Area of the Circle: " << circle->getArea() << "\n\n";
+
+  std::cout << "TEST COMPOSITE SHAPE" << "\n";
+
+  ShapePtr rect2(std::make_unique< Rect > (Rect({2, 2}, 4, 4)));
+  using CShape = almuhidat::CompositeShape;
+  ShapePtr composite(std::make_unique< CShape > (CShape(std::move(rect), std::move(circle), std::move(rect2))));
+
+  std::cout << "Composite Shape Location: (";
+  std::cout << almuhidat::getX(*composite) << ", " << almuhidat::getY(*composite);
+  std::cout << ")" << "\n";
+  std::cout << "Area of the Composite Shape: " << composite->getArea() << "\n";
+
+  composite->scale(2);
+  std::cout << "Composite Shape Location: (";
+  std::cout << almuhidat::getX(*composite) << ", " << almuhidat::getY(*composite);
+  std::cout << ")" << "\n";
+  std::cout << "New Area of the Composite Shape: " << composite->getArea() << "\n";
 
   return 0;
 }
