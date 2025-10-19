@@ -2,8 +2,6 @@
 #include "circle.hpp"
 #include "rectangle.hpp"
 
-
-
 void ShapeInfo(const Shape* figure)
 {
   std::cout << "Height: "

@@ -1,5 +1,6 @@
 #ifndef __STACK
 #define __STACK
+
 #include <iostream>
 
 template <class T>
@@ -32,6 +33,7 @@ public:
 
 	// Display all the list
 	void DisplayStack();
+
 	// How many item we have in the list
 	int Count();
 };

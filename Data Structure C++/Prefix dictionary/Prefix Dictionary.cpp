@@ -21,7 +21,7 @@ void Dictionary::insert(string word)
 
 	for (int i = 0; i < word.length(); ++i)
 	{
-		//extract first character of word
+		// Extract first character of word
 		int letter = word[i] - 'a';
 
 		if (current->children[letter] == NULL)
@@ -43,7 +43,7 @@ bool Dictionary::search(string word)
 		int letter = (int)word[i] - (int)'a';
 		if (current->children[letter] == NULL)
 		{
-			//retrun false not found
+			// Retrun false not found
 			return false; 
 		}
 

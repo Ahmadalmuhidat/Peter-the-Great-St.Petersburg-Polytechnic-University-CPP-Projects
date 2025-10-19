@@ -115,4 +115,5 @@ std::string Directed_Graph<T>::GraphType()
 {
   return "Directed Graph";
 }
+
 #endif

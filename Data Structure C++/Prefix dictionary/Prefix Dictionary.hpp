@@ -1,11 +1,13 @@
 #ifndef __Prefix_Dictionary
 #define __Prefix_Dictionary
+
 // Define the character size
 #define CHAR_SIZE 128
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
 #include <algorithm>
+
 using namespace std;
 
 struct Node
